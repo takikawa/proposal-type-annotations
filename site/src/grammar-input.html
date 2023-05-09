@@ -157,7 +157,7 @@ AsyncMethod :
     `async`  [no LineTerminator here]  ClassElementName  `?`?  TypeParameters?  `(`  UniqueFormalParameters  `)`  TypeAnnotation?  `{`  AsyncFunctionBody  `}`
 
 CoverCallExpressionAndAsyncArrowHead :
-    MemberExpression  TypeParameters?  Arguments  TypeAnnotation?
+    MemberExpression ApplicationTypeArguments?  Arguments  TypeAnnotation?
 
 AsyncArrowHead :
     `async`  [no LineTerminator here]  TypeParameters?  ArrowFormalParameters
@@ -182,13 +182,24 @@ ImportSpecifier :
 <emu-grammar>
 
 TypeArguments :
-    AngleBracketedTokens
+    `<` TypeArgumentList `>`
+
+ApplicationTypeArguments :
+    `::<` TypeArgumentList `>`
+
+TypeArgumentList :
+    Type
+    TypeArgumentList `,` Type
 
 TypeDeclaration :
     `type`  BindingIdentifier  TypeParameters?  `=`  Type
 
 TypeParameters :
-    AngleBracketedTokens
+    `<` TypeParameterList `>`
+
+TypeParameterList :
+    Identifier
+    TypeParameterList `,` Identifier
 
 Type :
     ConditionalType
@@ -220,8 +231,8 @@ TypeOperatorType :
 
 PrimaryType :
     ParenthesizedType
-    SquareBracketedType
-    CurlyBracketedType
+    TupleType
+    ObjectType
     TypeReference
     ArrayType
     LiteralType
@@ -232,13 +243,58 @@ PrimaryType :
     `void`
 
 ParenthesizedType :
-    ParenthesizedTokens
+    `(` Type `)`
 
-SquareBracketedType :
-    SquareBracketedTokens
+ObjectType :
+    `{` ObjectTypeFields `}`
+    `{|` ObjectTypeFields `|}`
 
-CurlyBracketedType :
-    CurlyBracketedTokens
+ObjectTypeFields :
+    ObjectTypeEntry
+    ObjectTypeFields `,` ObjectTypeEntry
+    ObjectTypeFields `;` ObjectTypeEntry
+
+ObjectTypeEntry :
+    TypeFieldSpecifier `:` Type
+
+TypeFieldSpecifier :
+    ReadWriteModifier? Identifier OptionalModifier?
+    ReadWriteModifier? IndexOrMappedSignatureParameter
+    CallSignatureParameter
+    ConstructorSignatureParameter
+
+IndexOrMappedSignatureParameter :
+    `[` Identifier `:` Type `]`
+    ReadOnlyMappingModifier? `[` Identifier `in` `keyof` Type `]` OptionalMappingModifier?
+
+CallSignatureParameter :
+    ParameterList
+
+ConstructorSignatureParameter :
+    `new` [no LineTerminator here] ParameterList
+
+OptionalModifier :
+    `?`
+
+OptionalMappingModifier :
+    `+` `?`
+    `-` `?`
+
+ReadWriteModifier :
+    `+`
+    `-`
+    `readonly`
+
+ReadOnlyMappingModifier :
+    `+` `readonly`
+    `-` `readonly`
+
+TupleType:
+    `[` TypeList `]`
+
+TypeList:
+    Type
+    TypeList `,` Type
 
 TypeReference :
     TypeName  [no LineTerminator here]  TypeArguments?
@@ -260,7 +316,7 @@ LiteralType :
 
 TemplateLiteralType :
     NoSubstitutionTemplate
-    TemplateBracketedTokens
+    SubstitutionTypeTemplate
 
 NumericLiteralType :
     NumericLiteral
@@ -298,7 +354,15 @@ ConstructorType :
     `new`  TypeParameters?  ParameterList  `=>`  Type
 
 ParameterList :
-    ParenthesizedTokens
+    `(` TypedParameterList `)`
+
+TypedParameterList
+    TypedParameter
+    TypedParameterList `,` TypedParameter
+
+TypedParameter
+    Type
+    Identifier `:` Type
 
 InterfaceDeclaration :
     `interface`  BindingIdentifier  TypeParameters?  InterfaceExtendsClause?  InterfaceBody
@@ -311,7 +375,7 @@ ClassOrInterfaceTypeList :
     ClassOrInterfaceTypeList  `,`  TypeReference
 
 InterfaceBody :
-    CurlyBracketedTokens
+    ObjectTypeFields
 
 TypeAnnotation :
     `:`  Type
@@ -347,41 +411,16 @@ IndexSignature :
 
 // New token section productions
 
-BracketedTokens :
-    ParenthesizedTokens
-    SquareBracketedTokens
-    CurlyBracketedTokens
-    AngleBracketedTokens
-    TemplateBracketedTokens
+SubstitutionTypeTemplate:
+    TemplateHead Type TemplateTypeSpans
 
-ParenthesizedTokens :
-    `(`  TokenBody?  `)`
+TemplateTypeSpans :
+    TemplateTail
+    TemplateTypeMiddleList TemplateTail
 
-SquareBracketedTokens :
-    `[`  TokenBody?  `]`
-
-CurlyBracketedTokens :
-    `{`  TokenBody?  `}`
-
-AngleBracketedTokens :
-    `<`  TokenBody?  `>`
-
-TemplateBracketedTokens :
-    TemplateHead  TemplateTokenBody  TemplateTail
-
-TemplateTokenBody :
-    TokenBody
-    TokenBody  TemplateMiddle  TemplateTokenBody
-
-TokenBody :
-    TokenOrBracketedTokens  TokenBody?
-
-TokenOrBracketedTokens :
-    NonBracketedToken
-    BracketedTokens
-
-NonBracketedToken :
-    Token but not one of `(` or `)` or `[` or `]` or `{` or `}` or `<` or `>` or TemplateHead or TemplateMiddle or TemplateTail
+TemplateTypeMiddleList :
+    TemplateMiddle Type
+    TemplateTypeMiddleList TemplateTypeMiddle Type
 
 </emu-grammar>
 </emu-clause>
