@@ -53,6 +53,7 @@ RelationalExpression :
     <ins>
     RelationalExpression  [no LineTerminator here]  `as`  Type
     RelationalExpression  [no LineTerminator here]  `as`  `const`
+    RelationalExpression  [no LineTerminator here]  `satisfies`  Type
     </ins>
 
 Declaration :
@@ -192,14 +193,28 @@ TypeArgumentList :
     TypeArgumentList `,` Type
 
 TypeDeclaration :
-    `type`  BindingIdentifier  TypeParameters?  `=`  Type
+    `opaque`? `type`  BindingIdentifier  TypeParameters?  `=`  Type
 
 TypeParameters :
     `<` TypeParameterList `>`
 
 TypeParameterList :
-    Identifier
-    TypeParameterList `,` Identifier
+    TypeParameter
+    TypeParameterList `,` TypeParameter
+
+TypeParameter :
+   TypeParameterBinding
+   TypeParameterBinding  `extends` Type
+   TypeParameterBinding  `:` Type
+   TypeParameterBinding  `=` Type
+
+TypeParameterBinding :
+   Identifier
+   `in` Identifier
+   `out` Identifier
+   `in out` Identifier
+   `+` Identifier
+   `-` Identifier
 
 Type :
     ConditionalType
@@ -227,6 +242,7 @@ TypeOperatorType :
     `unique`  TypeOperatorType
     `infer`  TypeOperatorType
     `not`  TypeOperatorType
+    `?`  TypeOperatorType
     PrimaryType
 
 PrimaryType :
@@ -239,6 +255,7 @@ PrimaryType :
     TypeQuery
     ImportType
     TypePredicate
+    InterfaceInlineType
     `this`
     `void`
 
@@ -256,6 +273,7 @@ ObjectTypeFields :
 
 ObjectTypeEntry :
     TypeFieldSpecifier `:` Type
+    `...` Type
 
 TypeFieldSpecifier :
     ReadWriteModifier? Identifier OptionalModifier?
@@ -295,6 +313,7 @@ TupleType:
 TypeList:
     Type
     TypeList `,` Type
+    TypeList `,` `...` Type
 
 TypeReference :
     TypeName  [no LineTerminator here]  TypeArguments?
@@ -359,13 +378,20 @@ ParameterList :
 TypedParameterList
     TypedParameter
     TypedParameterList `,` TypedParameter
+    TypedParameterList `,` TypedRestParameter
 
 TypedParameter
     Type
     Identifier `:` Type
 
+TypedRestParameter
+    `...` Identifier `:` Type
+
 InterfaceDeclaration :
     `interface`  BindingIdentifier  TypeParameters?  InterfaceExtendsClause?  InterfaceBody
+
+InterfaceInlineType :
+    `interface`  InterfaceExtendsClause?  InterfaceBody
 
 InterfaceExtendsClause :
     `extends`  ClassOrInterfaceTypeList
