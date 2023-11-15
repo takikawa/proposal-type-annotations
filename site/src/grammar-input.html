@@ -191,43 +191,22 @@ TypeParameters :
     AngleBracketedTokens
 
 Type :
-    ConditionalType
-    NonConditionalType
-
-ConditionalType :
-    NonConditionalType  [no LineTerminator here]  `extends`  NonConditionalType  `?`  Type  `:`  Type
-
-NonConditionalType :
     UnionType
-    FunctionType
-    ConstructorType
 
 UnionType :
     `|`?  IntersectionType
     UnionType  `|`  IntersectionType
 
 IntersectionType :
-    `&`?  TypeOperatorType
-    IntersectionType  `&`  TypeOperatorType
-
-TypeOperatorType :
-    `readonly`  TypeOperatorType
-    `keyof`  TypeOperatorType
-    `unique`  TypeOperatorType
-    `infer`  TypeOperatorType
-    `not`  TypeOperatorType
-    PrimaryType
+    `&`?  PrimaryType
+    IntersectionType  `&`  PrimaryType
 
 PrimaryType :
     ParenthesizedType
     SquareBracketedType
     CurlyBracketedType
     TypeReference
-    ArrayType
     LiteralType
-    TypeQuery
-    ImportType
-    TypePredicate
     `this`
     `void`
 
@@ -247,58 +226,16 @@ TypeName :
     Identifier
     TypeName  `.`  Identifier
 
-ArrayType :
-    PrimaryType  [no LineTerminator here]  `[`  `]`
-
 LiteralType :
     NumericLiteralType
     StringLiteral
-    TemplateLiteralType
     `true`
     `false`
     `null`
 
-TemplateLiteralType :
-    NoSubstitutionTemplate
-    TemplateBracketedTokens
-
 NumericLiteralType :
     NumericLiteral
     `-`  [no LineTerminator here]  NumericLiteral
-
-TypeQuery :
-    `typeof`  [no LineTerminator here]  EntityName
-
-EntityName :
-    IdentifierName
-    ImportSpecifier
-    EntityName  `.`  IdentifierName
-    EntityName  `::`  TypeArguments
-
-ImportSpecifier :
-    `import`  [no LineTerminator here]  `(`  ModuleSpecifier  `)`
-
-ImportType :
-    ImportSpecifier
-    ImportSpecifier  `.`  TypeName
-
-TypePredicate :
-    IdentifierOrThis  [no LineTerminator here]  `is`  Type
-    `asserts`  IdentifierOrThis
-    `asserts`  IdentifierOrThis  [no LineTerminator here]  `is`  Type
-
-IdentifierOrThis :
-    Identifier
-    `this`
-
-FunctionType :
-    TypeParameters?  ParameterList  `=>`  Type
-
-ConstructorType :
-    `new`  TypeParameters?  ParameterList  `=>`  Type
-
-ParameterList :
-    ParenthesizedTokens
 
 InterfaceDeclaration :
     `interface`  BindingIdentifier  TypeParameters?  InterfaceExtendsClause?  InterfaceBody
@@ -352,7 +289,6 @@ BracketedTokens :
     SquareBracketedTokens
     CurlyBracketedTokens
     AngleBracketedTokens
-    TemplateBracketedTokens
 
 ParenthesizedTokens :
     `(`  TokenBody?  `)`
@@ -365,13 +301,6 @@ CurlyBracketedTokens :
 
 AngleBracketedTokens :
     `<`  TokenBody?  `>`
-
-TemplateBracketedTokens :
-    TemplateHead  TemplateTokenBody  TemplateTail
-
-TemplateTokenBody :
-    TokenBody
-    TokenBody  TemplateMiddle  TemplateTokenBody
 
 TokenBody :
     TokenOrBracketedTokens  TokenBody?
