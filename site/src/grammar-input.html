@@ -75,7 +75,6 @@ Catch :
 
 FormalParameter :
     BindingIdentifier  TypeAnnotation?  Initializer?
-    BindingIdentifier  `?`  TypeAnnotation?
     BindingPattern  TypeAnnotation?  Initializer?
 
 FunctionRestParameter :
@@ -206,9 +205,6 @@ PrimaryType :
     SquareBracketedType
     CurlyBracketedType
     TypeReference
-    LiteralType
-    `this`
-    `void`
 
 ParenthesizedType :
     ParenthesizedTokens
@@ -221,17 +217,11 @@ CurlyBracketedType :
 
 TypeReference :
     TypeName  [no LineTerminator here]  TypeArguments?
+    `$` TypeName  [no LineTerminator here]  TypeArguments?
 
 TypeName :
     Identifier
     TypeName  `.`  Identifier
-
-LiteralType :
-    NumericLiteralType
-    StringLiteral
-    `true`
-    `false`
-    `null`
 
 NumericLiteralType :
     NumericLiteral
