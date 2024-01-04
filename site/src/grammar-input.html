@@ -183,7 +183,7 @@ TypeArguments :
     AngleBracketedTokens
 
 TypeDeclaration :
-    `type`  BindingIdentifier  TypeParameters?  `=`  Type
+    `declare` `type`  BindingIdentifier  TypeParameters?  `=`  Type
 
 TypeParameters :
     AngleBracketedTokens
@@ -227,7 +227,7 @@ NumericLiteralType :
     `-`  [no LineTerminator here]  NumericLiteral
 
 InterfaceDeclaration :
-    `interface`  BindingIdentifier  TypeParameters?  InterfaceExtendsClause?  InterfaceBody
+    `declare` `interface`  BindingIdentifier  TypeParameters?  InterfaceExtendsClause?  InterfaceBody
 
 InterfaceExtendsClause :
     `extends`  ClassOrInterfaceTypeList
