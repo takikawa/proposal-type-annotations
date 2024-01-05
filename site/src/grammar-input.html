@@ -173,15 +173,11 @@ TypeParameters :
     AngleBracketedTokens
 
 Type :
-    UnionType
+    FunctionType
+    PrimaryType
 
-UnionType :
-    `|`?  IntersectionType
-    UnionType  `|`  IntersectionType
-
-IntersectionType :
-    `&`?  PrimaryType
-    IntersectionType  `&`  PrimaryType
+FunctionType :
+    TypeParameters?  ParameterList  `=>`  Type
 
 PrimaryType :
     ParenthesizedType
