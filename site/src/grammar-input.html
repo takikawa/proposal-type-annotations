@@ -122,28 +122,12 @@ AsyncGeneratorExpression :
 AsyncGeneratorMethod :
     `async`  [no LineTerminator here]  `*`  ClassElementName  `?`?  TypeParameters?  `(`  UniqueFormalParameters  `)`  TypeAnnotation?  `{`  AsyncGeneratorBody  `}`
 
-ClassDeclaration :
-    AbstractModifier?  `class`  BindingIdentifier  ClassTail
-
-ClassExpression :
-    AbstractModifier?  `class`  BindingIdentifier?  ClassTail
-
 ClassHeritage :
     `extends`  LeftHandSideExpression  TypeArguments?  ClassImplementsClause?
 
 FieldDefinition :
     ClassElementName  `?`?  TypeAnnotation?  Initializer?
     ClassElementName  `!`  TypeAnnotation?  Initializer?
-
-ClassElement :
-    AccessibilityModifier?  OverrideModifier?  MethodDefinition
-    AccessibilityModifier?  `static`  OverrideModifier?  MethodDefinition
-    AccessibilityModifier?  FieldDefinition
-    AccessibilityModifier?  `static`  FieldDefinition
-    ClassStaticBlock
-    AbstractClassElement
-    IndexSignature
-    `;`
 
 AsyncFunctionDeclaration :
     `async`  [no LineTerminator here]  `function`  BindingIdentifier  TypeParameters?  `(`  FormalParameters  `)`  TypeAnnotation?  `{`  AsyncFunctionBody  `}`
@@ -216,15 +200,10 @@ CurlyBracketedType :
 
 TypeReference :
     TypeName  [no LineTerminator here]  TypeArguments?
-    `$` TypeName  [no LineTerminator here]  TypeArguments?
 
 TypeName :
     Identifier
     TypeName  `.`  Identifier
-
-NumericLiteralType :
-    NumericLiteral
-    `-`  [no LineTerminator here]  NumericLiteral
 
 InterfaceDeclaration :
     `declare` `interface`  BindingIdentifier  TypeParameters?  InterfaceExtendsClause?  InterfaceBody
@@ -242,31 +221,8 @@ InterfaceBody :
 TypeAnnotation :
     `:`  Type
 
-AbstractModifier :
-    `abstract`
-
 ClassImplementsClause :
     `implements`  ClassOrInterfaceTypeList
-
-AccessibilityModifier :
-    `public`
-    `protected`
-    `private`
-
-OverrideModifier :
-    `override`
-
-AbstractClassElement :
-    AccessibilityModifier?  `abstract`  OverrideModifier?  AbstractMethodDefinition
-    AccessibilityModifier?  `abstract`  AbstractFieldDefinition
-
-AbstractMethodDefinition :
-    ClassElementName  TypeParameters?  `(`  UniqueFormalParameters  `)`  TypeAnnotation?
-    `get`  ClassElementName  `(`  `)`  TypeAnnotation?
-    `set`  ClassElementName  `(`  PropertySetParameterList  `)`
-
-AbstractFieldDefinition :
-    ClassElementName  `?`?  TypeAnnotation?
 
 IndexSignature :
     `[`  BindingIdentifier  TypeAnnotation  `]`  TypeAnnotation
