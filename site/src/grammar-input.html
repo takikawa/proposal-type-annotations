@@ -51,7 +51,6 @@ OptionalChain :
 RelationalExpression :
     <ins>
     RelationalExpression  [no LineTerminator here]  `as`  Type
-    RelationalExpression  [no LineTerminator here]  `as`  `const`
     </ins>
 
 Declaration :
@@ -199,7 +198,6 @@ TypeReference :
 
 TypeName :
     Identifier
-    TypeName  `.`  Identifier
 
 InterfaceDeclaration :
     `declare` `interface`  BindingIdentifier  TypeParameters?  InterfaceExtendsClause?  InterfaceBody
