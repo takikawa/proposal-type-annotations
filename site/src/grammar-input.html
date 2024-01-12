@@ -190,7 +190,7 @@ PrimaryType :
     ParenthesizedType
     SquareBracketedType
     CurlyBracketedType
-    ArrayType
+    JuxtapositionType
     TypeReference
 
 ParenthesizedType :
@@ -202,8 +202,8 @@ SquareBracketedType :
 CurlyBracketedType :
     CurlyBracketedTokens
 
-ArrayType :
-    PrimaryType  [no LineTerminator here]  `[`  `]`
+JuxtapositionType :
+    PrimaryType  [no LineTerminator here]  SquareBracketedType
 
 TypeReference :
     TypeName  [no LineTerminator here]  TypeArguments?
