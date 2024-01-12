@@ -209,7 +209,8 @@ TypeReference :
     TypeName  [no LineTerminator here]  TypeArguments?
 
 TypeName :
-    Identifier
+    IdentifierName
+    TypeName  `.`  Identifier
 
 InterfaceDeclaration :
     `declare` `interface`  BindingIdentifier  TypeParameters?  InterfaceExtendsClause?  InterfaceBody
