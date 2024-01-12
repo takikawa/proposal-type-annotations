@@ -57,8 +57,6 @@ Declaration :
     <ins>
     TypeDeclaration
     InterfaceDeclaration
-    TypeImportDeclaration
-    TypeExportDeclaration
     </ins>
 
 LexicalBinding :
@@ -147,12 +145,16 @@ CoverCallExpressionAndAsyncArrowHead :
 AsyncArrowHead :
     `async`  [no LineTerminator here]  TypeParameters?  ArrowFormalParameters
 
-TypeImportDeclaration :
-    `declare`  `import`  ImportClause  FromClause  `;`
+ImportDeclaration :
+    <ins>
+    `import`  `type`  ImportClause  FromClause  `;`
+    </ins>
 
-TypeExportDeclaration :
-    `declare`  `export`  ExportFromClause  FromClause  `;
-    `declare`  `export`  NamedExports  `;
+ImportSpecifier :
+    <ins>
+    `type`  ImportedBinding
+    `type`  ModuleExportName  `as`  ImportedBinding
+    </ins>
 
 </emu-grammar>
 </emu-clause>
