@@ -172,7 +172,11 @@ TypeParameters :
     AngleBracketedTokens
 
 Type :
+    FunctionType
     UnionType
+
+FunctionType :
+    TypeParameters?  ParameterList  `=>`  Type
 
 UnionType :
     `|`?  IntersectionType
