@@ -166,7 +166,7 @@ TypeArguments :
     AngleBracketedTokens
 
 TypeDeclaration :
-    `declare` `type`  BindingIdentifier  TypeParameters?  `=`  Type
+    `type`  BindingIdentifier  TypeParameters?  `=`  Type
 
 TypeParameters :
     AngleBracketedTokens
@@ -213,7 +213,7 @@ TypeName :
     TypeName  `.`  Identifier
 
 InterfaceDeclaration :
-    `declare` `interface`  BindingIdentifier  TypeParameters?  InterfaceExtendsClause?  InterfaceBody
+    `interface`  BindingIdentifier  TypeParameters?  InterfaceExtendsClause?  InterfaceBody
 
 InterfaceExtendsClause :
     `extends`  ClassOrInterfaceTypeList
