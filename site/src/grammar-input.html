@@ -56,6 +56,9 @@ RelationalExpression :
 Declaration :
     <ins>
     TypeDeclaration
+    InterfaceDeclaration
+    TypeImportDeclaration
+    TypeExportDeclaration
     </ins>
 
 LexicalBinding :
@@ -144,6 +147,13 @@ CoverCallExpressionAndAsyncArrowHead :
 AsyncArrowHead :
     `async`  [no LineTerminator here]  TypeParameters?  ArrowFormalParameters
 
+TypeImportDeclaration :
+    `declare`  `import`  ImportClause  FromClause  `;`
+
+TypeExportDeclaration :
+    `declare`  `export`  ExportFromClause  FromClause  `;
+    `declare`  `export`  NamedExports  `;
+
 </emu-grammar>
 </emu-clause>
 
@@ -156,18 +166,7 @@ TypeArguments :
     AngleBracketedTokens
 
 TypeDeclaration :
-    `declare` NonNewLineSeparatedTypes
-
-NonNewLineSeparatedTypes :
-    Type  [no LineTerminator here]  NonNewLineSeparatedTypes?
-    Type  [no LineTerminator here]  DeclareConnector  NonNewLineSeparatedTypes?
-
-DeclareConnector:
-    `:`
-    `,`
-    `=`
-    `|`
-    `&`
+    `declare` `type`  BindingIdentifier  TypeParameters?  `=`  Type
 
 TypeParameters :
     AngleBracketedTokens
