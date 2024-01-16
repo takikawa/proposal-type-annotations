@@ -193,6 +193,7 @@ PrimaryType :
     SquareBracketedType
     CurlyBracketedType
     JuxtapositionType
+    LiteralType
     TypeReference
 
 ParenthesizedType :
@@ -206,6 +207,14 @@ CurlyBracketedType :
 
 JuxtapositionType :
     PrimaryType  [no LineTerminator here]  SquareBracketedType
+
+LiteralType :
+     NumericLiteralType
+     StringLiteral
+
+NumericLiteralType :
+     NumericLiteral
+     `-`  [no LineTerminator here]  NumericLiteral
 
 TypeReference :
     TypeName  [no LineTerminator here]  TypeArguments?
